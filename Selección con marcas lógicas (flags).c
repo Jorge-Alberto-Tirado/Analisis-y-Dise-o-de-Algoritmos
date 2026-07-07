@@ -1,55 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
-
-// funcion merge
-void merge(int A[], int inicio, int medio, int fin) {
-    int n1 = medio - inicio + 1;
-    int n2 = fin - medio;
-
-    int *L = malloc(n1 * sizeof(int));
-    int *R = malloc(n2 * sizeof(int));
-
-    for (int i = 0; i < n1; i++)
-        L[i] = A[inicio + i];
-
-    for (int j = 0; j < n2; j++)
-        R[j] = A[medio + 1 + j];
-
-    int i = 0, j = 0, k = inicio;
-
-    while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            A[k] = L[i];
-            i++;
-        } else {
-            A[k] = R[j];
-            j++;
-        }
-        k++;
-    }
-
-    while (i < n1) {
-        A[k++] = L[i++];
-    }
-
-    while (j < n2) {
-        A[k++] = R[j++];
-    }
-
-    free(L);
-    free(R);
-}
-
-// funcion merge sort
-void mergeSort(int A[], int inicio, int fin) {
-    if (inicio < fin) {
-        int medio = (inicio + fin) / 2;
-        mergeSort(A, inicio, medio);
-        mergeSort(A, medio + 1, fin);
-        merge(A, inicio, medio, fin);
-    }
-}
 
 int main(){
 
@@ -63,6 +15,7 @@ int main(){
     int *datos = malloc(max_datos * sizeof(int));
     int total = 0;
 
+    // leer archivo
     while(total < max_datos && fscanf(archivo, "%d,", &datos[total]) == 1){
         total++;
     }
@@ -85,36 +38,70 @@ int main(){
         return 1;
     }
 
-    printf("\nN,Tiempo_promedio(segundos)\n");
+    printf("\nN,Instrucciones,Formula,Tiempo_promedio(segundos)\n");
 
     for(int k = paso; k <= max_n; k += paso){
 
+        int size_s = k;
+        int contador = 0;
         double tiempo_total = 0;
 
         for(int rep = 0; rep < 30; rep++){
 
-            int *v = malloc(k * sizeof(int));
+            int size = k;
 
-            // copiar datos
-            for(int i = 0; i < k; i++){
+            int *v = malloc(size * sizeof(int));
+            int *s = malloc(size * sizeof(int));
+            int *activo = malloc(size * sizeof(int));
+
+            // COPIAR datos en lugar de generarlos
+            for(int i = 0; i < size; i++){
                 v[i] = datos[i];
+                activo[i] = 1;
             }
+
+            contador = 0;
+            int elementos_restantes = size;
 
             clock_t inicio = clock();
 
-            mergeSort(v, 0, k - 1);
+            while(elementos_restantes >= 1){
+                int mayor = -1;
+                int indice = -1;
+
+                for(int i = 0; i < size; i++){
+                    if(activo[i] == 1){
+                        contador++;
+
+                        if(indice == -1 || v[i] > mayor){
+                            mayor = v[i];
+                            indice = i;
+                        }
+                    }
+                }
+
+                activo[indice] = 0;
+                elementos_restantes--;
+
+                s[elementos_restantes] = mayor;
+            }
 
             clock_t fin = clock();
 
             double tiempo = (double)(fin - inicio) / CLOCKS_PER_SEC;
+
             tiempo_total += tiempo;
 
             free(v);
+            free(s);
+            free(activo);
         }
 
         double tiempo_promedio = tiempo_total / 30.0;
 
-        printf("%d,%f\n", k, tiempo_promedio);
+        int formula = size_s * (size_s - 1) / 2;
+
+        printf("%d|%d|%d|%f\n", size_s, contador, formula, tiempo_promedio);
     }
 
     free(datos);

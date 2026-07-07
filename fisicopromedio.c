@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
+
+// eliminar elemento por indice (borrado fisico)
+void remover_elemento(int **vector, int *size, int indice){
+    for(int i = indice; i < *size - 1; i++){
+        (*vector)[i] = (*vector)[i + 1];
+    }
+    (*size)--;
+    *vector = realloc(*vector, (*size) * sizeof(int));
+}
 
 int main(){
 
-    //  leer archivo una sola vez
+    // LEER ARCHIVO UNA SOLA VEZ
     FILE *archivo = fopen("datos.csv", "r");
     if(archivo == NULL){
         printf("Error: no se pudo abrir datos.csv\n");
@@ -45,7 +55,7 @@ int main(){
         int contador = 0;
         double tiempo_total = 0;
 
-        //  repetir 30 veces
+        //  30 repeticiones
         for(int rep = 0; rep < 30; rep++){
 
             int size = k;
@@ -53,7 +63,7 @@ int main(){
             int *v = malloc(size * sizeof(int));
             int *s = malloc(size * sizeof(int));
 
-            // copiar datos del archivo
+            //  copiar datos desde el archivo
             for(int i = 0; i < size; i++){
                 v[i] = datos[i];
             }
@@ -62,8 +72,7 @@ int main(){
 
             clock_t inicio = clock();
 
-            while(size >= 1){
-
+            while(size >= 2){
                 int mayor = v[0];
                 int indice = 0;
 
@@ -75,12 +84,13 @@ int main(){
                     contador++;
                 }
 
-                //  BORRADO LOGICO (swap con ultimo)
-                v[indice] = v[size - 1];
-
-                // guardar en S
-                size--;
+                remover_elemento(&v, &size, indice);
                 s[size] = mayor;
+
+                if(size == 1){
+                    size--;
+                    s[size] = v[0];
+                }
             }
 
             clock_t fin = clock();
@@ -95,9 +105,9 @@ int main(){
 
         double tiempo_promedio = tiempo_total / 30.0;
 
-        //int formula = size_s * (size_s - 1) / 2;
+        int formula = size_s * (size_s - 1) / 2;
 
-        printf("%d,%d,%f\n", size_s, contador, tiempo_promedio);
+        printf("%d|%d|%d|%f\n", size_s, contador, formula, tiempo_promedio);
     }
 
     free(datos);

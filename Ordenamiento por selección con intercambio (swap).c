@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 int main(){
 
-    //  leer archivo una sola vez
     FILE *archivo = fopen("datos.csv", "r");
     if(archivo == NULL){
         printf("Error: no se pudo abrir datos.csv\n");
@@ -15,6 +15,8 @@ int main(){
     int *datos = malloc(max_datos * sizeof(int));
     int total = 0;
 
+    // CICLO 1: Leer todos los datos del archivo CSV
+    // Va guardando numero por numero en el arreglo "datos"
     while(total < max_datos && fscanf(archivo, "%d,", &datos[total]) == 1){
         total++;
     }
@@ -39,48 +41,46 @@ int main(){
 
     printf("\nN,Instrucciones,Formula,Tiempo_promedio(segundos)\n");
 
+    // CICLO 2: Variar el tamaño del problema (k)
+    // Ejemplo: 100, 200, 300...
     for(int k = paso; k <= max_n; k += paso){
 
-        int size_s = k;
         int contador = 0;
         double tiempo_total = 0;
 
-        //  repetir 30 veces
+        // CICLO 3: Repetir 30 veces para sacar promedio
         for(int rep = 0; rep < 30; rep++){
 
-            int size = k;
+            int *v = malloc(k * sizeof(int));
 
-            int *v = malloc(size * sizeof(int));
-            int *s = malloc(size * sizeof(int));
-
-            // copiar datos del archivo
-            for(int i = 0; i < size; i++){
+            // ICLO 4: Copiar los datos base al arreglo de trabajo
+            // Esto evita modificar el arreglo original
+            for(int i = 0; i < k; i++){
                 v[i] = datos[i];
             }
 
-            contador = 0;
-
             clock_t inicio = clock();
 
-            while(size >= 1){
+            // CICLO 5: Algoritmo principal (selection sort por maximos)
+            // En cada iteracion se coloca el mayor al final del segmento no ordenado
+            for(int i = 0; i < k - 1; i++){
 
-                int mayor = v[0];
-                int indice = 0;
+                int idx_max = 0;
 
-                for(int i = 1; i < size; i++){
-                    if(v[i] > mayor){
-                        mayor = v[i];
-                        indice = i;
+                // CICLO 6: Buscar el elemento maximo en el rango [0, k-i)
+                // Cada vuelta reduce el rango porque el final ya esta ordenado
+                for(int j = 1; j < k - i; j++){
+                    if(v[j] > v[idx_max]){
+                        idx_max = j;
                     }
-                    contador++;
+                    contador++; // contar comparaciones
                 }
 
-                //  BORRADO LOGICO (swap con ultimo)
-                v[indice] = v[size - 1];
-
-                // guardar en S
-                size--;
-                s[size] = mayor;
+                // INTERCAMBIO (SWAP)
+                // Se coloca el maximo en la posicion final del segmento
+                int aux = v[k - 1 - i];
+                v[k - 1 - i] = v[idx_max];
+                v[idx_max] = aux;
             }
 
             clock_t fin = clock();
@@ -90,14 +90,13 @@ int main(){
             tiempo_total += tiempo;
 
             free(v);
-            free(s);
         }
 
         double tiempo_promedio = tiempo_total / 30.0;
 
-        //int formula = size_s * (size_s - 1) / 2;
+        int formula = k * (k - 1) / 2;
 
-        printf("%d,%d,%f\n", size_s, contador, tiempo_promedio);
+        printf("%d|%d|%d|%f\n", k, contador, formula, tiempo_promedio);
     }
 
     free(datos);
