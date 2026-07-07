@@ -137,7 +137,3 @@ Posteriormente comienza a leer cada byte almacenado en el archivo comprimido. Me
 Si el bit leído es cero, avanza hacia el hijo izquierdo del árbol; si es uno, avanza hacia el hijo derecho. Cuando alcanza un nodo hoja, imprime el carácter correspondiente utilizando `putchar()` y reinicia el recorrido desde la raíz.
 
 El proceso continúa hasta reconstruir la totalidad de los caracteres originales almacenados antes de la compresión.
-
-## Conclusión
-
-Los programas desarrollados implementan de manera completa el algoritmo de compresión Huffman mediante el uso de árboles binarios y montículos mínimos. El programa de codificación analiza las frecuencias de aparición de los caracteres, construye el árbol correspondiente y genera una representación binaria más eficiente de la información. Por su parte, el programa de decodificación reconstruye el mismo árbol a partir de los datos almacenados y recupera el contenido original recorriendo la estructura según los bits leídos. La combinación de ambos programas permite realizar procesos de compresión y recuperación de información de forma eficiente, manteniendo la integridad de los datos originales.
