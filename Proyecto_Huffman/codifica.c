@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
     int tamanoAlfabeto = procesarArchivoTexto(argv[1], caracteresActivos, frecuenciasActivas, &totalCaracteres);
 
     if (tamanoAlfabeto == 0) {
-        fprintf(stderr, "El archivo esta mas vacio que mis esperanzas de encontrar codigo sin bugs.\n");
+        fprintf(stderr, "El archivo esta vacio.\n");
         return EXIT_FAILURE;
     }
 
