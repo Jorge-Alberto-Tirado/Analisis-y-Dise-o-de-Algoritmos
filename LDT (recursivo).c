@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h> // <-- agregado
+#include <time.h>
 
 #define MAX 100
 #define REP 30
@@ -27,7 +27,6 @@ int LT_rec(int i, int j) {
     return matriz[i][j] + (arriba > izquierda ? arriba : izquierda);
 }
 
-// ---- promedio recortado ----
 double promedio(double t[]) {
     double suma = 0, min = t[0], max = t[0];
 
