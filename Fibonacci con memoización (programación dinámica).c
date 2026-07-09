@@ -20,7 +20,6 @@ long long fibonacci(int n) {
         F[n] = fibonacci(n - 1) + fibonacci(n - 2);
     return F[n];
 }
-// ----------- MAIN -----------
 int main() {
     int max_n, paso;
     printf("Valor maximo de n: ");
