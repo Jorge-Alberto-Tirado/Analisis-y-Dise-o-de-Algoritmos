@@ -23,7 +23,6 @@ int LCS(char A[], char B[], int i, int j) {
     return (x > y) ? x : y;
 }
 
-// ----------- MAIN -----------
 int main() {
 
     char A[100], B[100];
