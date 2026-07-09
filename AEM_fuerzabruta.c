@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h> // Necesario para el glorioso INT_MAX
+#include <limits.h> 
 #include <time.h>
 
 #define MAX 1000
@@ -10,7 +10,7 @@
 long long instrucciones = 0;
 int matriz_global[MAX][MAX];
 
-// Funcion que representa el EXTRACT-MIN(Q) de tu imagen
+// Funcion que representa el EXTRACT-MIN(Q)
 // Busca linealmente el vertice con la distancia minima que no este en el arbol
 int extractMin(int key[], int inMST[], int vertices)
 {
@@ -19,7 +19,7 @@ int extractMin(int key[], int inMST[], int vertices)
 
     for (int v = 0; v < vertices; v++)
     {
-        instrucciones++; // Contamos cada comparacion por puro masoquismo
+        instrucciones++; // Contamos cada comparacion
 
         // Si el vertice v sigue en Q (inMST == 0) y su peso es menor al minimo actual
         if (inMST[v] == 0 && key[v] < min)
@@ -34,16 +34,16 @@ int extractMin(int key[], int inMST[], int vertices)
 
 int prim(int matriz[MAX][MAX], int vertices)
 {
-    // pi[u] en tu imagen: Almacena el arbol final
+    // pi[u]: Almacena el arbol final
     int padre[MAX];
 
-    // key[u] en tu imagen: Almacena el peso minimo para conectar el nodo
+    // key[u]: Almacena el peso minimo para conectar el nodo
     int key[MAX];
 
     // Nuestro conjunto Q. 0 = esta en Q, 1 = ya lo sacamos
     int inMST[MAX];
 
-    // Lineas 1 a 3 de tu imagen: Inicializar todo en infinito
+    // Inicializar todo en infinito
     for (int i = 0; i < vertices; i++)
     {
         instrucciones++;
@@ -52,14 +52,13 @@ int prim(int matriz[MAX][MAX], int vertices)
         padre[i] = -1; // NIL
     }
 
-    // Lineas 4 y 5: El nodo raiz es el primero (indice 0)
+    //El nodo raiz es el primero (indice 0)
     key[0] = 0;
 
-    // Linea 6: Bucle principal. Iteramos vertices - 1 veces porque
-    // el MST de V vertices siempre tiene V-1 aristas.
+    //Bucle principal. Iteramos vertices - 1 veces porque el MST de V vertices siempre tiene V-1 aristas.
     for (int count = 0; count < vertices - 1; count++)
     {
-        // Linea 7: Extraer el nodo u con la menor llave de Q
+        //Extraer el nodo u con la menor llave de Q
         int u = extractMin(key, inMST, vertices);
 
         // Validacion por si el grafo es disconexo y no hay mas aristas
@@ -68,7 +67,7 @@ int prim(int matriz[MAX][MAX], int vertices)
         // Lo sacamos de Q
         inMST[u] = 1;
 
-        // Lineas 8 a 11: Actualizar las llaves de los vertices adyacentes a u
+        //Actualizar las llaves de los vertices adyacentes a u
         for (int v = 0; v < vertices; v++)
         {
             instrucciones++;
@@ -98,7 +97,7 @@ int prim(int matriz[MAX][MAX], int vertices)
     return costoTotal;
 }
 
-// Reutilizamos tu lector de CSV que funciona de maravilla
+// Reutilizamos lector de CSV
 void leerCSV(char nombreArchivo[], int matriz[MAX][MAX])
 {
     FILE *archivo = fopen(nombreArchivo, "r");
@@ -165,7 +164,6 @@ int main()
     printf("Intervalo: ");
     scanf("%d", &intervalo);
 
-    // Guardianes de memoria contra usuarios destructivos
     if (inicio > MAX) { printf("Ajustando inicio a %d...\n", MAX); inicio = MAX; }
     if (fin > MAX) { printf("Ajustando fin a %d...\n", MAX); fin = MAX; }
     if (inicio < 2) inicio = 2;
