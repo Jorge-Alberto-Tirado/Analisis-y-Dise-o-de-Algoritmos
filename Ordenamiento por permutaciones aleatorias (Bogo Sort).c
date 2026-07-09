@@ -28,7 +28,6 @@ void permutationSort(int A[], int n) {
     }
 }
 
-// ----------- MAIN -----------
 int main() {
 
     srand(time(NULL)); // inicializar aleatoriedad
@@ -69,7 +68,7 @@ int main() {
 
     for (int k = paso; k <= max_n; k += paso) {
 
-        // ⚠️ limite de seguridad
+
         if (k > 10) {
             printf("n demasiado grande para permutation sort\n");
             break;
