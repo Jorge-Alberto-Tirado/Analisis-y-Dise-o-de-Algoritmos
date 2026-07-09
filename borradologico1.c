@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// NUEVO
+
 void remover_elemento(int *vector, int *size, int indice){
     vector[indice] = vector[*size - 1];
     (*size)--;
