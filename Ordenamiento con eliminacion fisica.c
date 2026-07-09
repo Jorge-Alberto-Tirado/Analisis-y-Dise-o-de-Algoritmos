@@ -14,7 +14,6 @@ void remover_elemento(int **vector, int *size, int indice){
 
 int main(){
 
-    // LEER ARCHIVO UNA SOLA VEZ
     FILE *archivo = fopen("datos.csv", "r");
     if(archivo == NULL){
         printf("Error: no se pudo abrir datos.csv\n");
