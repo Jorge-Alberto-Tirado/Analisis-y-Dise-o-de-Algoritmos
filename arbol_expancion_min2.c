@@ -12,10 +12,7 @@
 */
 
 
-
 // ESTRUCTURA PARA GUARDAR UNA ARISTA
-
-
 struct Arista {
     int origen;
     int destino;
@@ -31,16 +28,13 @@ struct Subconjunto {
 };
 
 // Funcion find Busca la raiz del conjunto
-
-
 int find(struct Subconjunto subconjuntos[], int vertice) {
 
     // Si el padre NO es el mismo vertice
     // seguimos buscando hacia arriba
     if (subconjuntos[vertice].padre != vertice) {
 
-        // Compresion de ruta:
-        // conectamos directamente a la raiz
+        // Compresion de ruta: conectamos directamente a la raiz
         subconjuntos[vertice].padre =
             find(subconjuntos,
                  subconjuntos[vertice].padre);
@@ -52,15 +46,12 @@ int find(struct Subconjunto subconjuntos[], int vertice) {
 
 
 //funcion union  Une dos conjuntos
-
-
 void Union(struct Subconjunto subconjuntos[],int x,int y) {
 
     int raizX = find(subconjuntos, x);
     int raizY = find(subconjuntos, y);
 
-    // El arbol mas pequeño se cuelga del grande
-
+    // El arbol mas pequeÃ±o se cuelga del grande
     if (subconjuntos[raizX].nivel < subconjuntos[raizY].nivel) {
 
         subconjuntos[raizX].padre = raizY;
@@ -83,9 +74,6 @@ void Union(struct Subconjunto subconjuntos[],int x,int y) {
 
 
 // FUNCION PARA ORDENAR ARISTAS
-// Bubble Sort para que sea facil de entender
-
-
 void ordenarAristas(struct Arista aristas[],int totalAristas) {
 
     for (int i = 0; i < totalAristas - 1; i++) {
@@ -96,55 +84,29 @@ void ordenarAristas(struct Arista aristas[],int totalAristas) {
             // se intercambian
             if (aristas[j].peso >
                 aristas[j + 1].peso) {
-
                 struct Arista temporal;
-
                 temporal = aristas[j];
-
                 aristas[j] = aristas[j + 1];
-
                 aristas[j + 1] = temporal;
             }
         }
     }
 }
 
-
-
 // FUNCION PRINCIPAL KRUSKAL
-
-
 void kruskal(int matriz[VERTICES][VERTICES]) {
 
-    /*
-        Primero convertiremos la matriz
-        en una lista de aristas
-    */
-
+    //convertiremos la matriz en una lista de aristas
     struct Arista aristas[50];
-
     int totalAristas = 0;
 
-
-
     // EXTRAER ARISTAS DE LA MATRIZ
-
-
     for (int i = 0; i < VERTICES; i++) {
-
         for (int j = i + 1; j < VERTICES; j++) {
 
-            /*
-                Si el peso es diferente de 0
-                significa que SI existe conexion
-            */
-
             if (matriz[i][j] != 0) {
-
                 aristas[totalAristas].origen = i;
-
                 aristas[totalAristas].destino = j;
-
                 aristas[totalAristas].peso =
                     matriz[i][j];
 
@@ -153,45 +115,24 @@ void kruskal(int matriz[VERTICES][VERTICES]) {
         }
     }
 
-
-
     // ORDENAR ARISTAS POR PESO
-
-
     ordenarAristas(aristas, totalAristas);
 
-
-
     // CREAR SUBCONJUNTOS
-
-
     struct Subconjunto subconjuntos[VERTICES];
-
     for (int i = 0; i < VERTICES; i++) {
-
         subconjuntos[i].padre = i;
-
         subconjuntos[i].nivel = 0;
     }
 
 
-
     // AQUI GUARDAREMOS EL MST
-
-
     struct Arista resultado[VERTICES];
-
     int aristasUsadas = 0;
-
     int indice = 0;
-
     int costoTotal = 0;
 
-
-
     // ALGORITMO KRUSKAL
-
-
     while (aristasUsadas < VERTICES - 1 &&
            indice < totalAristas) {
 
@@ -208,17 +149,11 @@ void kruskal(int matriz[VERTICES][VERTICES]) {
             find(subconjuntos, actual.destino);
 
 
-        /*
-            Si tienen diferente raiz
-            NO forman ciclo
-        */
+        //Si tienen diferente raiz NO forman ciclo
 
         if (raizOrigen != raizDestino) {
-
             resultado[aristasUsadas] = actual;
-
             aristasUsadas++;
-
             costoTotal += actual.peso;
 
             // Unir conjuntos
@@ -228,23 +163,15 @@ void kruskal(int matriz[VERTICES][VERTICES]) {
         }
     }
 
-
-
     // IMPRIMIR RESULTADO
-
-
     printf("\n");
     printf("ARBOL DE EXPANSION MINIMA\n");
     printf("-------------------------\n");
 
     for (int i = 0; i < aristasUsadas; i++) {
-
         printf("%c -- %c == %d\n",
-
                resultado[i].origen + 'A',
-
                resultado[i].destino + 'A',
-
                resultado[i].peso);
     }
 
@@ -252,19 +179,7 @@ void kruskal(int matriz[VERTICES][VERTICES]) {
            costoTotal);
 }
 
-
-
-
-// FUNCION MAIN
-
-
 int main() {
-
-    /*
-        MATRIZ DE PESOS
-
-           A  B  C  D  E  F  G
-    */
 
     int matriz[VERTICES][VERTICES] = {
 
