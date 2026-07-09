@@ -35,7 +35,7 @@ int is_empty() {
     return front == rear;
 }
 
-// Funcion BFS exacta a la imagen
+// Funcion BFS
 void BFS(int s) {
     // Lineas 1-4: Inicializar todos los vertices (excepto el origen)
     for (int u = 0; u < num_vertices; u++) {
@@ -46,35 +46,35 @@ void BFS(int s) {
         }
     }
 
-    // Lineas 5-7: Configurar el vertice origen s
+    //Configurar el vertice origen s
     color[s] = GRAY;
     d[s] = 0;
     pi[s] = NIL;
 
-    // Lineas 8-9: Vaciar la cola y encolar el origen
+    //Vaciar la cola y encolar el origen
     front = 0;
     rear = 0;
     enqueue(s);
 
-    // Lineas 10-18: El ciclo de exploracion principal
+    //El ciclo de exploracion principal
     while (!is_empty()) {
         // Linea 11
         int u = dequeue();
 
-        // Linea 12: Para cada vertice v en la lista de adyacencia de u
+        //Para cada vertice v en la lista de adyacencia de u
         for (int v = 0; v < num_vertices; v++) {
             if (adj[u][v] == 1) { // Verificamos si existe la arista
 
-                // Linea 13: Si el nodo no ha sido visitado
+                //Si el nodo no ha sido visitado
                 if (color[v] == WHITE) {
-                    color[v] = GRAY;       // Linea 14: Lo marcamos como descubierto
-                    d[v] = d[u] + 1;       // Linea 15: Aumentamos la distancia
-                    pi[v] = u;             // Linea 16: Guardamos quien lo descubrio
-                    enqueue(v);            // Linea 17: Lo metemos a la cola
+                    color[v] = GRAY;       //Lo marcamos como descubierto
+                    d[v] = d[u] + 1;       //Aumentamos la distancia
+                    pi[v] = u;             //Guardamos quien lo descubrio
+                    enqueue(v);            //Lo metemos a la cola
                 }
             }
         }
-        // Linea 18: Nodo u completamente explorado
+        //Nodo u completamente explorado
         color[u] = BLACK;
     }
 }
