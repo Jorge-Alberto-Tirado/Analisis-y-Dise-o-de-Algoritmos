@@ -10,8 +10,6 @@
 long long instrucciones = 0;
 int matriz_global[MAX][MAX];
 
-/* // --- MIN-HEAP SIMPLIFICADO (Estilo Lazy) ---
-
 struct MinHeapNode
 {
     int v;
@@ -172,8 +170,6 @@ int primLazyHeap(int matriz[MAX][MAX], int vertices)
 
     return costoTotal;
 } */
-// --- MIN-HEAP ESTRICTO CORMEN (Eager) ---
-// Comentarios sin acentos por peticion del compilador
 
 struct MinHeapNode {
     int v;
@@ -196,7 +192,6 @@ struct MinHeap *createMinHeap(int capacity) {
     return minHeap;
 }
 
-// Nueva funcion de swap que tambien actualiza el rastreador de posiciones
 void swapMinHeapNode(struct MinHeap *minHeap, int i, int j) {
     instrucciones++;
     
@@ -254,7 +249,7 @@ struct MinHeapNode extractMin(struct MinHeap *minHeap) {
     return root;
 }
 
-// La joya de la corona de Cormen: equivalente al INCREASE-KEY pero hacia abajo
+// equivalente al INCREASE-KEY pero hacia abajo
 void decreaseKey(struct MinHeap *minHeap, int v, int new_key) {
     instrucciones++;
     
@@ -278,7 +273,7 @@ int isInMinHeap(struct MinHeap *minHeap, int v) {
     return 0;
 }
 
-// --- ALGORITMO DE PRIM (Estricto Cormen) ---
+//ALGORITMO DE PRIM (Estricto Cormen)
 int primCormenHeap(int matriz[MAX][MAX], int vertices) {
     int padre[MAX];
     int key[MAX];
