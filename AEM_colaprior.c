@@ -10,8 +10,6 @@
 long long instrucciones = 0;
 int matriz_global[MAX][MAX];
 
-// --- MIN-HEAP SIMPLIFICADO (Estilo Lazy) ---
-
 struct MinHeapNode
 {
     int v;
@@ -111,7 +109,7 @@ struct MinHeapNode extractMin(struct MinHeap *minHeap)
     return root;
 }
 
-// --- ALGORITMO DE PRIM (Con el truco de C++) ---
+//ALGORITMO DE PRIM (Con el truco de C++)
 
 int primLazyHeap(int matriz[MAX][MAX], int vertices)
 {
@@ -140,7 +138,7 @@ int primLazyHeap(int matriz[MAX][MAX], int vertices)
         struct MinHeapNode minNode = extractMin(minHeap);
         int u = minNode.v;
 
-        // EL TRUCO MAGICO DEL C++:
+        // EL TRUCO DEL C++:
         // Si el nodo ya fue procesado antes, lo ignoramos por completo
         if (inMST[u]) continue;
 
