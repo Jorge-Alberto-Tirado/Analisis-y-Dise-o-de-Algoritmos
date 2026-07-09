@@ -77,7 +77,7 @@ void KruskalMST(struct Graph* graph) {
 
     // Paso 2: Iterar sobre las aristas ordenadas
     while (e < vertices - 1 && i < graph->aristas) {
-        // Tomar la arista mas pequeña
+        // Tomar la arista mas pequeÃ±a
         struct Edge next_edge = graph->edge[i++];
 
         int x = find(subsets, next_edge.origen);
@@ -100,7 +100,7 @@ void KruskalMST(struct Graph* graph) {
     }
     printf("Costo Total: %d\n", minimumCost);
 
-    // Liberar memoria (porque somos personas civilizadas)
+    // Liberar memoria
     free(subsets);
 }
 
