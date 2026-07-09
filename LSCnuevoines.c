@@ -26,7 +26,6 @@ int LCSS(char *A, char *B) {
     return (caso1 > caso2) ? caso1 : caso2;
 }
 
-// ----------- MAIN -----------
 int main() {
 
     char A[100], B[100];
