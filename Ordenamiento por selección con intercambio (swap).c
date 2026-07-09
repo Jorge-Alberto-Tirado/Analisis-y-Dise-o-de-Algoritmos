@@ -15,8 +15,7 @@ int main(){
     int *datos = malloc(max_datos * sizeof(int));
     int total = 0;
 
-    // CICLO 1: Leer todos los datos del archivo CSV
-    // Va guardando numero por numero en el arreglo "datos"
+    // Leer todos los datos del archivo CSV Va guardando numero por numero en el arreglo "datos"
     while(total < max_datos && fscanf(archivo, "%d,", &datos[total]) == 1){
         total++;
     }
@@ -41,8 +40,7 @@ int main(){
 
     printf("\nN,Instrucciones,Formula,Tiempo_promedio(segundos)\n");
 
-    // CICLO 2: Variar el tamaño del problema (k)
-    // Ejemplo: 100, 200, 300...
+    //Variar el tamaño del problema (k)
     for(int k = paso; k <= max_n; k += paso){
 
         int contador = 0;
@@ -53,22 +51,19 @@ int main(){
 
             int *v = malloc(k * sizeof(int));
 
-            // ICLO 4: Copiar los datos base al arreglo de trabajo
-            // Esto evita modificar el arreglo original
+            //Copiar los datos base al arreglo de trabajo
             for(int i = 0; i < k; i++){
                 v[i] = datos[i];
             }
 
             clock_t inicio = clock();
 
-            // CICLO 5: Algoritmo principal (selection sort por maximos)
-            // En cada iteracion se coloca el mayor al final del segmento no ordenado
+            //Algoritmo principal (selection sort por maximos) n cada iteracion se coloca el mayor al final del segmento no ordenado
             for(int i = 0; i < k - 1; i++){
 
                 int idx_max = 0;
 
-                // CICLO 6: Buscar el elemento maximo en el rango [0, k-i)
-                // Cada vuelta reduce el rango porque el final ya esta ordenado
+                //Buscar el elemento maximo en el rango [0, k-i) Cada vuelta reduce el rango porque el final ya esta ordenado
                 for(int j = 1; j < k - i; j++){
                     if(v[j] > v[idx_max]){
                         idx_max = j;
@@ -76,7 +71,6 @@ int main(){
                     contador++; // contar comparaciones
                 }
 
-                // INTERCAMBIO (SWAP)
                 // Se coloca el maximo en la posicion final del segmento
                 int aux = v[k - 1 - i];
                 v[k - 1 - i] = v[idx_max];
