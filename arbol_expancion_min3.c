@@ -4,13 +4,11 @@
 #include <time.h>
 
 #define MAX 1000
-// Asignamos un valor real para evitar que el compilador entre en crisis
 #define REPETICIONES 5
 
 long long instrucciones = 0;
 
 // Declarar la matriz afuera del main en el segmento global
-// Esto evita el infame Stack Overflow que mataba tu programa
 int matriz_global[MAX][MAX];
 
 struct Arista
@@ -144,7 +142,7 @@ int kruskal(int matriz[MAX][MAX],
     int indice = 0;
     int costoTotal = 0;
 
-    // Algoritmo Greedy: Construccion del Arbol de Expansion Minima
+    // Construccion del Arbol de Expansion Minima
     while (aristasUsadas < vertices - 1 &&
            indice < totalAristas)
     {
@@ -240,15 +238,12 @@ double promedioSinExtremos(double tiempos[])
         if (tiempos[i] < menor)
             menor = tiempos[i];
     }
-
-    // Al haber definido un numero mayor a 2 esto ya no va a crear un agujero negro matematico
     return (suma - mayor - menor) /
            (REPETICIONES - 2);
 }
 
 int main()
 {
-    // Forzamos a la consola a imprimir al instante
     setvbuf(stdout, NULL, _IONBF, 0);
 
     printf("Iniciando programa...\n");
@@ -295,7 +290,7 @@ int main()
     printf("\n%-10s %-12s %-18s %-12s\n", "Vertices", "Costo", "Instrucciones", "Tiempo(ms)");
     printf("----------------------------------------------------------\n");
 
-    // BUCLE INTELIGENTE: Sabe si tiene que subir o bajar
+    // BUCLE INTELIGENTE
     int condicion_subida = (inicio <= fin);
 
     for (int vertices = inicio;
